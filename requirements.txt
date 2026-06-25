@@ -1,0 +1,7 @@
+nltk
+sacrebleu
+numpy
+torch
+transformers
+tensorflow
+bleurt
