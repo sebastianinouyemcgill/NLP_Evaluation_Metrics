@@ -1,54 +1,49 @@
+#!/usr/bin/env python
+"""CLI entry point for MT evaluation."""
+
+from __future__ import annotations
+
 import argparse
 import json
+import sys
+from pathlib import Path
 
-from evaluation.evaluate import evaluate
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-
-def load_json(path):
-    with open(path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    predictions = []
-    references = []
-
-    for item in data:
-        predictions.append(item["prediction"])
-        references.append(item["references"])
-
-    return predictions, references
+from evaluation.evaluate import evaluate  # noqa: E402
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Run BLEU, METEOR, BLEURT evaluation")
-
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Evaluate machine translation outputs.")
+    parser.add_argument("--data", required=True, help="Path to input JSON file.")
     parser.add_argument(
-        "--input",
-        type=str,
-        required=True,
-        help="Path to JSON file with predictions and references"
+        "--metrics",
+        nargs="+",
+        default=["bleu", "meteor"],
+        choices=["bleu", "meteor", "bleurt"],
+        help="Metrics to compute.",
     )
-
     parser.add_argument(
-        "--bleurt_checkpoint",
-        type=str,
-        default="BLEURT-20",
-        help="Path or name of BLEURT checkpoint (e.g., BLEURT-20)"
+        "--bleurt-checkpoint",
+        default=None,
+        help="Path to a BLEURT checkpoint directory (required for bleurt).",
     )
-
     args = parser.parse_args()
 
-    predictions, references = load_json(args.input)
+    if "bleurt" in args.metrics and not args.bleurt_checkpoint:
+        parser.error("--bleurt-checkpoint is required when --metrics includes bleurt")
 
     results = evaluate(
-        predictions=predictions,
-        references=references,
-        bleurt_checkpoint=args.bleurt_checkpoint
+        data_path=args.data,
+        metrics=args.metrics,
+        bleurt_checkpoint=args.bleurt_checkpoint,
     )
 
-    print("\n=== Evaluation Results ===")
-    print(f"BLEU:   {results['bleu']:.4f}")
-    print(f"METEOR: {results['meteor']:.4f}")
-    print(f"BLEURT: {results['bleurt']:.4f}")
+    num_examples = results.pop("num_examples")
+    scores = {name: round(value, 4) for name, value in results.items()}
+
+    print(f"Evaluated {num_examples} examples")
+    print(json.dumps(scores, indent=2))
 
 
 if __name__ == "__main__":

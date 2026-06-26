@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "prediction": "La réunion commencera à neuf heures.",
+    "references": [
+      "La réunion commencera à neuf heures."
+    ]
+  },
+  {
+    "id": 2,
+    "prediction": "J'aime étudier le traitement automatique des langues.",
+    "references": [
+      "J'apprécie étudier le traitement automatique des langues."
+    ]
+  },
+  {
+    "id": 3,
+    "prediction": "Il fait beau aujourd'hui.",
+    "references": [
+      "Le temps est agréable aujourd'hui",
+      "Aujourd'hui, il fait beau"
+    ]
+  }
+]

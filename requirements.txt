@@ -1,7 +1,5 @@
-nltk
-sacrebleu
-numpy
-torch
-transformers
-tensorflow
-bleurt
+sacrebleu>=2.4.0
+nltk>=3.8.0
+tensorflow>=2.12.0,<2.20.0
+tf-slim>=1.1.0
+git+https://github.com/google-research/bleurt.git
