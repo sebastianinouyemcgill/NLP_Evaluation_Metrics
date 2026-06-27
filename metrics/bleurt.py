@@ -1,9 +1,4 @@
-"""
-Corpus-level BLEURT via the official Google Research implementation.
-
-Checkpoint: download and unzip a BLEURT checkpoint (e.g. BLEURT-20-D12) from
-https://github.com/google-research/bleurt and pass the directory path.
-"""
+"""Corpus-level BLEURT (TensorFlow). Requires a downloaded checkpoint directory."""
 
 from __future__ import annotations
 

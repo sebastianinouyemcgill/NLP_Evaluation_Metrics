@@ -12,6 +12,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from evaluation.evaluate import evaluate  # noqa: E402
 
+METRIC_CHOICES = ["bleu", "meteor", "bleurt", "cometkiwi"]
+METEOR_LANGUAGES = ["en", "cz", "de", "es", "fr"]
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate machine translation outputs.")
@@ -20,13 +23,24 @@ def main() -> None:
         "--metrics",
         nargs="+",
         default=["bleu", "meteor"],
-        choices=["bleu", "meteor", "bleurt"],
+        choices=METRIC_CHOICES,
         help="Metrics to compute.",
     )
     parser.add_argument(
         "--bleurt-checkpoint",
         default=None,
         help="Path to a BLEURT checkpoint directory (required for bleurt).",
+    )
+    parser.add_argument(
+        "--meteor-language",
+        default="en",
+        choices=METEOR_LANGUAGES,
+        help="Target language for METEOR (official JVM implementation).",
+    )
+    parser.add_argument(
+        "--cometkiwi-model",
+        default="Unbabel/wmt22-cometkiwi-da",
+        help="COMET model name or checkpoint path (for cometkiwi).",
     )
     args = parser.parse_args()
 
@@ -37,6 +51,8 @@ def main() -> None:
         data_path=args.data,
         metrics=args.metrics,
         bleurt_checkpoint=args.bleurt_checkpoint,
+        meteor_language=args.meteor_language,
+        cometkiwi_model=args.cometkiwi_model,
     )
 
     num_examples = results.pop("num_examples")

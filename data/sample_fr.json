@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "source": "The meeting will begin at nine o'clock.",
     "prediction": "La réunion commencera à neuf heures.",
     "references": [
       "La réunion commencera à neuf heures."
@@ -8,6 +9,7 @@
   },
   {
     "id": 2,
+    "source": "I enjoy studying natural language processing.",
     "prediction": "J'aime étudier le traitement automatique des langues.",
     "references": [
       "J'apprécie étudier le traitement automatique des langues."
@@ -15,6 +17,7 @@
   },
   {
     "id": 3,
+    "source": "The weather is pleasant today.",
     "prediction": "Il fait beau aujourd'hui.",
     "references": [
       "Le temps est agréable aujourd'hui",

@@ -1,0 +1,6 @@
+# Install after requirements.txt: pip install -r requirements-meteor.txt --no-deps
+aac-metrics==0.5.5
+torch>=1.10.1
+packaging>=23
+pyyaml>=6.0
+typing_extensions

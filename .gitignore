@@ -7,7 +7,7 @@ __pycache__/
 dist/
 build/
 
-# Virtual environments
+# Virtual environments (keep off exFAT SSD — 1 MB clusters waste space)
 .venv/
 venv/
 env/
@@ -23,6 +23,15 @@ htmlcov/
 # Environment / secrets
 .env
 .envrc
+secrets/
+test_translation.py
+
+# Local data (generated or ingested)
+data/excerpts/
+data/sentences/
+data/data.json
+excerpts/
+sentences/
 
 # IDE
 .idea/
@@ -30,6 +39,7 @@ htmlcov/
 
 # OS
 .DS_Store
+._*
 
 # BLEURT checkpoints (downloaded model files)
 BLEURT-*.zip
